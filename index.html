@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dahlia’s Hypnotic Unlock</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: black;
+      font-family: Arial, sans-serif;
+      color: fuchsia;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    #unlock {
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      border: 2px solid fuchsia;
+      background: black;
+      color: fuchsia;
+      margin-top: 15px;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: fuchsia;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop>
+    <source src="static/video.mp4" type="video/mp4">
+  </video>
+
+  <div id="message">
+    <h1>🌙 Watch closely… Dahlia is inside your mind 🌙</h1>
+  </div>
+
+  <div id="unlock">
+    <h2>🔒 The package is locked 🔒</h2>
+    <p>Ask Dahlia for the secret code to continue.</p>
+    <input id="code" placeholder="Enter code...">
+    <button onclick="checkCode()">Unlock</button>
+  </div>
+
+  <script>
+    // Mostra il blocco dopo 20 secondi
+    setTimeout(() => {
+      document.getElementById("unlock").style.display = "block";
+    }, 28000);
+
+    function checkCode() {
+      const input = document.getElementById("code").value.trim();
+      const secret = "goodgirlfordahlia"; // <-- qui metti il tuo codice segreto
+      if (input.toLowerCase() === secret.toLowerCase()) {
+        window.location.href = "static/images/"; // oppure link Throne / Drive
+      } else {
+        alert("Wrong code. Ask Dahlia again.");
+      }
+    }
+  </script>
+</body>
+</html>
