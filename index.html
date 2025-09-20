@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dahlia’s Hypnotic Unlock</title>
+  <title>Dahlia Hypnotic Unlock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body, html {
       margin: 0;
@@ -13,23 +14,47 @@
       font-family: Arial, sans-serif;
       color: fuchsia;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
+
+    /* Pulsante neon iniziale */
+    #startBtn {
+      padding: 20px 40px;
+      font-size: 24px;
+      color: #fff;
+      background: transparent;
+      border: 2px solid fuchsia;
+      border-radius: 12px;
+      cursor: pointer;
+      text-shadow: 0 0 10px fuchsia, 0 0 20px fuchsia;
+      animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 5px fuchsia; }
+      to { box-shadow: 0 0 25px fuchsia, 0 0 50px fuchsia; }
+    }
+
+    /* Video ipnotico */
     video {
+      display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* Adatta 9:16 */
       z-index: -1;
     }
+
+    /* Sezione unlock */
     #unlock {
-      margin-top: 20px;
       display: none;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
+      z-index: 2;
     }
+
     input {
       padding: 10px;
       font-size: 18px;
@@ -39,7 +64,8 @@
       margin-top: 15px;
       border-radius: 8px;
     }
-    button {
+
+    button.unlockBtn {
       margin-top: 15px;
       padding: 10px 20px;
       font-size: 18px;
@@ -52,32 +78,44 @@
   </style>
 </head>
 <body>
-  <video autoplay muted loop>
+  <!-- Pulsante iniziale -->
+  <button id="startBtn">✨ CLICK TO ENTER ✨</button>
+
+  <!-- Video ipnotico -->
+  <video id="hypnoVideo" playsinline>
     <source src="static/video.mp4" type="video/mp4">
   </video>
 
-  <div id="message">
-    <h1>🌙 Watch closely… Dahlia is inside your mind 🌙</h1>
-  </div>
-
+  <!-- Unlock section -->
   <div id="unlock">
     <h2>🔒 The package is locked 🔒</h2>
     <p>Ask Dahlia for the secret code to continue.</p>
     <input id="code" placeholder="Enter code...">
-    <button onclick="checkCode()">Unlock</button>
+    <button class="unlockBtn" onclick="checkCode()">Unlock</button>
   </div>
 
   <script>
-    // Mostra il blocco dopo 20 secondi
-    setTimeout(() => {
-      document.getElementById("unlock").style.display = "block";
-    }, 28000);
+    const startBtn = document.getElementById("startBtn");
+    const video = document.getElementById("hypnoVideo");
+    const unlock = document.getElementById("unlock");
+
+    startBtn.addEventListener("click", () => {
+      startBtn.style.display = "none";
+      video.style.display = "block";
+      video.muted = false;
+      video.play();
+
+      // Mostra l'unlock dopo 20 secondi
+      setTimeout(() => {
+        unlock.style.display = "flex";
+      }, 20000);
+    });
 
     function checkCode() {
       const input = document.getElementById("code").value.trim();
-      const secret = "goodgirlfordahlia"; // <-- qui metti il tuo codice segreto
+      const secret = "goodgirlfordahlia"; // <-- codice che decidi tu
       if (input.toLowerCase() === secret.toLowerCase()) {
-        window.location.href = "static/images/"; // oppure link Throne / Drive
+        window.location.href = "static/images/"; // link pacchetto o esterno
       } else {
         alert("Wrong code. Ask Dahlia again.");
       }
