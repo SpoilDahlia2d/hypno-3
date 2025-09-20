@@ -16,6 +16,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
 
     /* Pulsante neon iniziale */
@@ -46,7 +47,7 @@
       z-index: -1;
     }
 
-    /* Sezione unlock */
+    /* Unlock section */
     #unlock {
       display: none;
       flex-direction: column;
@@ -75,6 +76,20 @@
       border-radius: 10px;
       cursor: pointer;
     }
+
+    /* Messaggio finale */
+    #finalMessage {
+      display: none;
+      font-size: 26px;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 10px fuchsia, 0 0 20px fuchsia, 0 0 40px fuchsia;
+      animation: glowText 1.5s infinite alternate;
+    }
+    @keyframes glowText {
+      from { opacity: 0.7; text-shadow: 0 0 10px fuchsia; }
+      to { opacity: 1; text-shadow: 0 0 30px fuchsia, 0 0 60px fuchsia; }
+    }
   </style>
 </head>
 <body>
@@ -94,28 +109,38 @@
     <button class="unlockBtn" onclick="checkCode()">Unlock</button>
   </div>
 
+  <!-- Messaggio finale -->
+  <div id="finalMessage">
+    ✨ SEND SCREEN TO DAHLIA FOR GIFT ✨
+  </div>
+
   <script>
     const startBtn = document.getElementById("startBtn");
     const video = document.getElementById("hypnoVideo");
     const unlock = document.getElementById("unlock");
+    const finalMessage = document.getElementById("finalMessage");
 
+    // Avvio esperienza
     startBtn.addEventListener("click", () => {
       startBtn.style.display = "none";
       video.style.display = "block";
       video.muted = false;
       video.play();
-
-      // Mostra l'unlock dopo 20 secondi
-      setTimeout(() => {
-        unlock.style.display = "flex";
-      }, 20000);
     });
 
+    // Quando finisce il video → sfondo nero + unlock
+    video.addEventListener("ended", () => {
+      video.style.display = "none";
+      unlock.style.display = "flex";
+    });
+
+    // Controllo codice
     function checkCode() {
       const input = document.getElementById("code").value.trim();
       const secret = "goodgirlfordahlia"; // <-- codice che decidi tu
       if (input.toLowerCase() === secret.toLowerCase()) {
-        window.location.href = "static/images/"; // link pacchetto o esterno
+        unlock.style.display = "none";
+        finalMessage.style.display = "block";
       } else {
         alert("Wrong code. Ask Dahlia again.");
       }
